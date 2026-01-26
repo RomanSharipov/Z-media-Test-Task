@@ -5,8 +5,7 @@ using VContainer;
 
 namespace CodeBase.Infrastructure.Installers
 {
-    [CreateAssetMenu(fileName = "AssetReferencesServiceInstaller",
-    menuName = "ScriptableInstallers/AssetReferencesServiceInstaller")]
+    [CreateAssetMenu(fileName = "AssetReferencesServiceInstaller",menuName = "ScriptableInstallers/AssetReferencesServiceInstaller")]
     
     public class AssetReferencesServiceInstaller : AScriptableInstaller
     {

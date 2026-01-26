@@ -5,8 +5,7 @@ using VContainer.Unity;
 
 namespace CodeBase.Infrastructure.Installers
 {
-    [CreateAssetMenu(fileName = "StatemachineInstaller",
-    menuName = "ScriptableInstallers/StatemachineInstaller")]
+    [CreateAssetMenu(fileName = "StatemachineInstaller",menuName = "ScriptableInstallers/StatemachineInstaller")]
     public class StatemachineInstaller : AScriptableInstaller
     {
         public override void Install(IContainerBuilder builder)
@@ -34,7 +33,7 @@ namespace CodeBase.Infrastructure.Installers
 
             builder.Register<BootstrapState>(Lifetime.Singleton).AsSelf();
             builder.Register<MenuState>(Lifetime.Singleton).AsSelf();
-            builder.Register<PauseState>(Lifetime.Singleton).AsSelf();
+            
         }
     }
 }

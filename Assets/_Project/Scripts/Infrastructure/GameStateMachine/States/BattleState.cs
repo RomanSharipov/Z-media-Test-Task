@@ -23,9 +23,10 @@ namespace CodeBase.Infrastructure
 
         }
 
-        public override async UniTask Enter()
+        public override UniTask Enter()
         {
             //_childStateMachine.Enter<CombatState>().Forget();
+            return UniTask.CompletedTask;
         }
 
 

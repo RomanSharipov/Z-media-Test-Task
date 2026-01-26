@@ -1,12 +1,10 @@
 ﻿using CodeBase.Infrastructure.Services;
 using UnityEngine;
 using VContainer;
-using VContainer.Unity;
 
 namespace CodeBase.Infrastructure.Installers
 {
-    [CreateAssetMenu(fileName = "AllServicesInstaller",
-    menuName = "ScriptableInstallers/AllServicesInstaller")]
+    [CreateAssetMenu(fileName = "AllServicesInstaller",menuName = "ScriptableInstallers/AllServicesInstaller")]
     
     public class AllServicesInstaller : AScriptableInstaller
     {
@@ -15,9 +13,7 @@ namespace CodeBase.Infrastructure.Installers
             builder.Register<LevelService>(Lifetime.Singleton)
                 .As<ILevelService>();
             
-            builder.Register<InputService>(Lifetime.Singleton)
-                .As<IInputService>()
-                .As<IInitializable>();
+
             
             builder.Register<PlayerPrefsSaveService>(Lifetime.Singleton)
                 .As<ISaveService>();

@@ -9,7 +9,7 @@ namespace CodeBase.Infrastructure
     {
         [Inject] private readonly IAssetProvider _assetProvider;
         [Inject] private readonly IAppStateService _appStateService;
-        [Inject] private readonly IScreenSceneService _multiPopupService;
+        [Inject] private readonly IScreenSceneService _screenSceneService;
 
         private CompositeDisposable _compositeDisposable = new();
 
@@ -19,9 +19,9 @@ namespace CodeBase.Infrastructure
 
         }
 
-        public async UniTask Enter()
+        public UniTask Enter()
         {
-            _multiPopupService.ShowPopup<IMainMenuScreen>(screen =>
+            _screenSceneService.ShowPopup<IMainMenuScreen>(screen =>
             {
                 screen.OnPlay.Subscribe(_ =>
                 {
@@ -29,19 +29,12 @@ namespace CodeBase.Infrastructure
                 }).AddTo(_compositeDisposable);
             }).Forget();
 
-
-            //_windowService.Open<MainMenu>(window =>
-            //{
-            //    window.OnStartGameButton.Subscribe(_ =>
-            //    {
-            //        _appStateService.Enter<GameLoopState>();
-            //    }).AddTo(_compositeDisposable);
-            //}).Forget();
+            return UniTask.CompletedTask;
         }
 
         public UniTask Exit()
         {
-            _multiPopupService.HidePopup<IMainMenuScreen>();
+            _screenSceneService.HidePopup<IMainMenuScreen>();
 
             
             _assetProvider.Cleanup();
