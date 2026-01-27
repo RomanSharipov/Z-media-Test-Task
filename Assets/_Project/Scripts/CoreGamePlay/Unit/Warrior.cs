@@ -11,27 +11,25 @@ namespace CodeBase.CoreGamePlay
         
         public UnitData Data { get; private set; }
         public Health Health { get; private set; }
+        private TeamType _currentTeam;
         public UnitView View => _unitView;
 
         public bool IsAlive => Health.IsAlive;
         
         private Subject<Unit> _onDied = new();
-        
+
+
         public IObservable<Unit> Died => _onDied;
 
-        public TeamType CurrentTeam { get; internal set; }
+        public TeamType CurrentTeam => _currentTeam;
 
-        public void Initialize(UnitData data, Color color, float scale)
+        public void Initialize(UnitData data, TeamType team)
         {
+            _currentTeam = team;
             _unitDetector.Initialize(this);
             Data = data;
             Health = new Health(data.HP);
-
-            View.SetColor(color);
-            View.SetScale(scale);
-
             
-
             Health.OnDied.Subscribe(_ => 
             {
                 _onDied.OnNext(Unit.Default);

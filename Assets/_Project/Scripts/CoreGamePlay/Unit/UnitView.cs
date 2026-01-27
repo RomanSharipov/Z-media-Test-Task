@@ -5,10 +5,14 @@ public class UnitView : MonoBehaviour
     private Renderer _renderer;
     private Animator _animator;
 
-    public void Initialize(Renderer renderer, Animator animator)
+    public void Initialize(Renderer renderer, Animator animator, Color color, float scale)
     {
         _renderer = renderer;
         _animator = animator;
+
+        SetColor(color);
+        SetScale(scale);
+
     }
 
     public void SetColor(Color color)

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: UnitConfigDatabase
   m_EditorClassIdentifier: 
   <BaseStats>k__BackingField: {fileID: 11400000, guid: 44f5e8c75cb420f4bb392f043ba0290f, type: 2}
-  <UnitPrefab>k__BackingField: {fileID: 8018185245820446951, guid: 0926c2c316a44d342888e0974c1f51dd, type: 3}
+  <UnitPrefab>k__BackingField: {fileID: 4598264707178211377, guid: 0926c2c316a44d342888e0974c1f51dd, type: 3}
   <Shapes>k__BackingField:
   - {fileID: 11400000, guid: 3492a0b69ccb11543b57db5d9b8a71b4, type: 2}
   - {fileID: 11400000, guid: 2e003ae942ad45d4e9c571b5b281fda5, type: 2}

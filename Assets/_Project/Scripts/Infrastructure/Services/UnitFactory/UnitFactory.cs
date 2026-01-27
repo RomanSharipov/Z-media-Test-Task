@@ -12,7 +12,7 @@ public class UnitFactory : IUnitFactory
         _sceneObjectsProvider = sceneObjectsProvider;
     }
 
-    public Warrior Create(ShapeConfig shape, SizeConfig size, ColorConfig color, Vector3 position)
+    public Warrior Create(ShapeConfig shape, SizeConfig size, ColorConfig color, Vector3 position, TeamType team)
     {
         Warrior unit = Object.Instantiate(_database.UnitPrefab, position, Quaternion.identity, _sceneObjectsProvider.UnitsContainer);
         
@@ -26,19 +26,19 @@ public class UnitFactory : IUnitFactory
         if (animator == null)
             Debug.LogError($"[UnitFactory] '{shape.name}' prefab has NO Animator. Add Animator component.");
 
-        unit.View.Initialize(renderer, animator);
-
+        unit.View.Initialize(renderer, animator, color.Color, size.Scale);
         UnitData data = UnitDataBuilder.Build(_database.BaseStats, shape, size, color);
+        unit.Initialize(data, team);
         
         return unit;
     }
 
-    public Warrior CreateRandom(Vector3 position)
+    public Warrior CreateRandom(Vector3 position, TeamType team)
     {
         var shape = _database.Shapes[Random.Range(0, _database.Shapes.Length)];
         var size = _database.Sizes[Random.Range(0, _database.Sizes.Length)];
         var color = _database.Colors[Random.Range(0, _database.Colors.Length)];
 
-        return Create(shape, size, color, position);
+        return Create(shape, size, color, position, team);
     }
 }
