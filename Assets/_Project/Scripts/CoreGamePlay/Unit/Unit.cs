@@ -5,23 +5,26 @@ namespace CodeBase.CoreGamePlay
 {
     public class Unit : MonoBehaviour
     {
-        [SerializeField] private UnitView _view;
+        [SerializeField] private UnitDetector _unitDetector;
+
 
         public UnitData Data { get; private set; }
         public Health Health { get; private set; }
-        public UnitView View => _view;
+        public UnitView View { get; private set; }
 
         public bool IsAlive => Health.IsAlive;
 
-        public void Initialize(UnitData data, Color color, float scale)
+        public void Initialize(UnitData data, Color color, float scale, UnitView unitView)
         {
+            View = unitView;
+            _unitDetector.Initialize(this);
             Data = data;
             Health = new Health(data.HP);
 
-            _view.SetColor(color);
-            _view.SetScale(scale);
+            View.SetColor(color);
+            View.SetScale(scale);
 
-            Health.OnDamaged.Subscribe(_ => _view.PlayDamage()).AddTo(this);
+            Health.OnDamaged.Subscribe(_ => View.PlayDamage()).AddTo(this);
             Health.OnDied.Subscribe(_ => OnDied()).AddTo(this);
         }
 
@@ -32,7 +35,7 @@ namespace CodeBase.CoreGamePlay
 
         private void OnDied()
         {
-            _view.PlayDeath();
+            View.PlayDeath();
             Destroy(gameObject, 1f);
         }
     }

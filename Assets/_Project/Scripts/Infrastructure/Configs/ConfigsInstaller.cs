@@ -3,7 +3,7 @@ using UnityEngine;
 using VContainer;
 
 
-[CreateAssetMenu(fileName = "StatemachineInstaller",menuName = "ScriptableInstallers/ConfigsInstaller")]
+[CreateAssetMenu(fileName = "ConfigsInstaller", menuName = "ScriptableInstallers/ConfigsInstaller")]
 
 public class ConfigsInstaller : AScriptableInstaller
 {

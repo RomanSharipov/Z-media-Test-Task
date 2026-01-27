@@ -14,9 +14,16 @@ public class UnitFactory : IUnitFactory
 
     public Unit Create(ShapeConfig shape, SizeConfig size, ColorConfig color, Vector3 position)
     {
-        Unit unit = Object.Instantiate(shape.Prefab, position, Quaternion.identity, _sceneObjectsProvider.UnitsContainer);
+        Unit unit = Object.Instantiate(_database.UnitPrefab, position, Quaternion.identity, _sceneObjectsProvider.UnitsContainer);
+        
+        UnitView unitView = Object.Instantiate(shape.UnitViewPrefab, position, Quaternion.identity, _sceneObjectsProvider.UnitsContainer);
+
+        
+
+        unitView.transform.SetParent(unit.transform);
+
         UnitData data = UnitDataBuilder.Build(_database.BaseStats, shape, size, color);
-        unit.Initialize(data, color.Color, size.Scale);
+        unit.Initialize(data, color.Color, size.Scale, unitView);
         return unit;
     }
 
