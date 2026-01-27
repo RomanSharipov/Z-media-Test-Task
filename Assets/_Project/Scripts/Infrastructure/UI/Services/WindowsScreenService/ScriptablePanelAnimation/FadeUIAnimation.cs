@@ -1,68 +1,63 @@
 ﻿using System.Threading;
 using Cysharp.Threading.Tasks;
-using DG.Tweening;
-using UiScenes;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Fade UI Animation", menuName = "UiScenes/DoTween Animations/Fade")]
-public class FadeUIAnimation : ScriptableUIAnimation
+namespace UiScenes
 {
-    [SerializeField]
-    private float _hideDuration = 0.3f;
-    [SerializeField]
-    private float _showDuration = 0.3f;
-    [SerializeField]
-    private Ease _ease;
-
-    public override void Hide(RectTransform target)
+    [CreateAssetMenu(fileName = "Fade UI Animation", menuName = "UiScenes/DoTween Animations/Fade")]
+    public class FadeUIAnimation : ScriptableUIAnimation
     {
-        CanvasGroup canvasGroup = target.gameObject.GetComponent<CanvasGroup>();
-        if (canvasGroup == null)
-        {
-            canvasGroup = target.gameObject.AddComponent<CanvasGroup>();
-        }
-        canvasGroup.alpha = 0.0f;
-    }
-    public override void Show(RectTransform target)
-    {
-        CanvasGroup canvasGroup = target.gameObject.GetComponent<CanvasGroup>();
-        if (canvasGroup == null)
-        {
-            canvasGroup = target.gameObject.AddComponent<CanvasGroup>();
-        }
-        canvasGroup.alpha = 1.0f;
-    }
+        [SerializeField] private float _hideDuration = 0.3f;
+        [SerializeField] private float _showDuration = 0.3f;
+        [SerializeField] private AnimationCurve _curve = AnimationCurve.EaseInOut(0f, 0f, 1f, 1f);
 
-    public override UniTask HideAnimation(RectTransform target, CancellationToken cancellationToken)
-    {
-        CanvasGroup canvasGroup = target.gameObject.GetComponent<CanvasGroup>();
-        if (canvasGroup == null)
+        public override void Hide(RectTransform target)
         {
-            canvasGroup = target.gameObject.AddComponent<CanvasGroup>();
+            GetOrAddCanvasGroup(target).alpha = 0f;
         }
-        canvasGroup.alpha = 1.0f;
 
-        
-
-        return canvasGroup
-            .DOFade(0.0f, _hideDuration)
-            .SetEase(_ease)
-            .SetUpdate(true)
-            .ToUniTask(TweenCancelBehaviour.Complete, cancellationToken);
-    }
-
-    public override UniTask ShowAnimation(RectTransform target, CancellationToken cancellationToken)
-    {
-        CanvasGroup canvasGroup = target.gameObject.GetComponent<CanvasGroup>();
-        if (canvasGroup == null)
+        public override void Show(RectTransform target)
         {
-            canvasGroup = target.gameObject.AddComponent<CanvasGroup>();
+            GetOrAddCanvasGroup(target).alpha = 1f;
         }
-        canvasGroup.alpha = 0.0f;
-        return canvasGroup
-            .DOFade(1.0f, _showDuration)
-            .SetEase(_ease)
-            .SetUpdate(true)
-            .ToUniTask(TweenCancelBehaviour.Complete, cancellationToken);
+
+        public override async UniTask HideAnimation(RectTransform target, CancellationToken cancellationToken)
+        {
+            var canvasGroup = GetOrAddCanvasGroup(target);
+            await AnimateAlpha(canvasGroup, 1f, 0f, _hideDuration, cancellationToken);
+        }
+
+        public override async UniTask ShowAnimation(RectTransform target, CancellationToken cancellationToken)
+        {
+            var canvasGroup = GetOrAddCanvasGroup(target);
+            await AnimateAlpha(canvasGroup, 0f, 1f, _showDuration, cancellationToken);
+        }
+
+        private async UniTask AnimateAlpha(CanvasGroup canvasGroup, float from, float to, float duration, CancellationToken cancellationToken)
+        {
+            canvasGroup.alpha = from;
+            float elapsed = 0f;
+
+            while (elapsed < duration)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+
+                elapsed += Time.unscaledDeltaTime;
+                float t = _curve.Evaluate(elapsed / duration);
+                canvasGroup.alpha = Mathf.Lerp(from, to, t);
+
+                await UniTask.Yield(PlayerLoopTiming.Update, cancellationToken);
+            }
+
+            canvasGroup.alpha = to;
+        }
+
+        private CanvasGroup GetOrAddCanvasGroup(RectTransform target)
+        {
+            var canvasGroup = target.GetComponent<CanvasGroup>();
+            if (canvasGroup == null)
+                canvasGroup = target.gameObject.AddComponent<CanvasGroup>();
+            return canvasGroup;
+        }
     }
 }

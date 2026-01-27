@@ -1,30 +1,25 @@
 using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
-using DG.Tweening;
 using UniRx;
 using UnityEngine;
 
 public class AnimatedUIPanel : MonoBehaviour
 {
     [Header("Target")]
-    [SerializeField]
-    private Canvas _targetCanvas;
-    [SerializeField]
-    private RectTransform _panel;
-    [Header("Parameters")]
-    [SerializeField]
-    private AnimatedUIPanelParameters _parameters;
+    [SerializeField] private Canvas _targetCanvas;
+    [SerializeField] private RectTransform _panel;
 
+    [Header("Parameters")]
+    [SerializeField] private AnimatedUIPanelParameters _parameters;
 
     private bool _initialized;
+    private CancellationTokenSource _animationCts;
 
-    private Subject<Unit> _onShowStart;
-    private Subject<Unit> _onShowEnd;
-    private Subject<Unit> _onHideStart;
-    private Subject<Unit> _onHideEnd;
-
-    private CancellationTokenSource _animationCancellationTokenSource;
+    private Subject<Unit> _onShowStart = new();
+    private Subject<Unit> _onShowEnd = new();
+    private Subject<Unit> _onHideStart = new();
+    private Subject<Unit> _onHideEnd = new();
 
     public IObservable<Unit> OnShowStart => _onShowStart;
     public IObservable<Unit> OnShowEnd => _onShowEnd;
@@ -36,28 +31,24 @@ public class AnimatedUIPanel : MonoBehaviour
         if (_initialized) throw new Exception("Already initialized");
 
         _panel.gameObject.SetActive(false);
-        _onShowStart = new();
-        _onShowEnd = new();
-        _onHideStart = new();
-        _onHideEnd = new();
-
         _initialized = true;
     }
+
     private void OnDestroy()
     {
-        DOTween.Kill(_panel.gameObject.GetComponent<CanvasGroup>(), complete: true);
-        _animationCancellationTokenSource?.Cancel();
+        _animationCts?.Cancel();
+        _animationCts?.Dispose();
     }
-    public async virtual UniTask Show(bool skipAnimation = false)
+
+    public virtual async UniTask Show(bool skipAnimation = false)
     {
         if (!_initialized) throw new Exception("UI panel not initialized");
 
-        _animationCancellationTokenSource?.Cancel();
-        _animationCancellationTokenSource = new();
+        _animationCts?.Cancel();
+        _animationCts = new CancellationTokenSource();
 
         _panel.gameObject.SetActive(true);
         _targetCanvas.sortingOrder = _parameters.ForegroundSortOrder;
-
 
         if (skipAnimation)
         {
@@ -68,18 +59,16 @@ public class AnimatedUIPanel : MonoBehaviour
         }
 
         _onShowStart.OnNext(Unit.Default);
-
-        await _parameters.Animation.ShowAnimation(_panel, _animationCancellationTokenSource.Token);
-
+        await _parameters.Animation.ShowAnimation(_panel, _animationCts.Token);
         _onShowEnd.OnNext(Unit.Default);
     }
 
-    public async virtual UniTask Hide(bool skipAnimation = false)
+    public virtual async UniTask Hide(bool skipAnimation = false)
     {
         if (!_initialized) throw new Exception("UI panel not initialized");
 
-        _animationCancellationTokenSource?.Cancel();
-        _animationCancellationTokenSource = new();
+        _animationCts?.Cancel();
+        _animationCts = new CancellationTokenSource();
 
         _targetCanvas.sortingOrder = _parameters.BackgroundSortOrder;
 
@@ -93,7 +82,7 @@ public class AnimatedUIPanel : MonoBehaviour
         }
 
         _onHideStart.OnNext(Unit.Default);
-        await _parameters.Animation.HideAnimation(_panel, _animationCancellationTokenSource.Token);
+        await _parameters.Animation.HideAnimation(_panel, _animationCts.Token);
         _panel.gameObject.SetActive(false);
         _onHideEnd.OnNext(Unit.Default);
     }
