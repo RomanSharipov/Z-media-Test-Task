@@ -3,33 +3,33 @@ using System;
 using System.Collections.Generic;
 using UniRx;
 
-public class UnitsOnLevel : IUnitsOnLevel
+public class WarriorsOnLevel : IWarriorsOnLevel
 {
     private List<Warrior> _botUnits = new();
     private List<Warrior> _playerUnits = new();
     private CompositeDisposable _disposables = new();
 
-    public IReadOnlyList<Warrior> BotUnits => _botUnits;
-    public IReadOnlyList<Warrior> PlayerUnits => _playerUnits;
+    public IReadOnlyList<Warrior> BotWarriors => _botUnits;
+    public IReadOnlyList<Warrior> PlayerWarriors => _playerUnits;
 
     private Subject<TeamType> _onTeamDefeated = new();
     public IObservable<TeamType> OnTeamDefeated => _onTeamDefeated;
 
-    public void AddUnit(Warrior unit)
+    public void AddWarrior(Warrior unit)
     {
         if (unit.CurrentTeam == TeamType.Player)
         {
             _playerUnits.Add(unit);
-            unit.Died.Subscribe(_ => RemoveUnit(unit)).AddTo(_disposables);
+            unit.OnDied.Subscribe(_ => RemoveWarrior(unit)).AddTo(_disposables);
         }
         else if (unit.CurrentTeam == TeamType.Bot)
         {
             _botUnits.Add(unit);
-            unit.Died.Subscribe(_ => RemoveUnit(unit)).AddTo(_disposables);
+            unit.OnDied.Subscribe(_ => RemoveWarrior(unit)).AddTo(_disposables);
         }
     }
 
-    public void RemoveUnit(Warrior unit)
+    public void RemoveWarrior(Warrior unit)
     {
         if (unit.CurrentTeam == TeamType.Player)
         {

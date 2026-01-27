@@ -1,40 +1,46 @@
 ﻿using AYellowpaper.SerializedCollections;
 using System.Collections.Generic;
 
-public static class UnitDataBuilder
+namespace CodeBase.CoreGamePlay
 {
-    public static UnitData Build(
-        BaseStatsConfig baseStats,
-        ShapeConfig shape,
-        SizeConfig size,
-        ColorConfig color)
+    public static class UnitDataBuilder
     {
-        var combined = new SerializedDictionary<StatType, float>();
+        private const float MinAttackInterval = 0.1f;
+        private const float MinHP = 1f;
 
-        ApplyModifiers(combined, baseStats.Stats);
-        ApplyModifiers(combined, shape.Modifiers);
-        ApplyModifiers(combined, size.Modifiers);
-        ApplyModifiers(combined, color.Modifiers);
-
-        return new UnitData
+        public static UnitData Build(
+            BaseStatsConfig baseStats,
+            ShapeConfig shape,
+            SizeConfig size,
+            ColorConfig color)
         {
-            HP = combined.GetValueOrDefault(StatType.HP),
-            ATK = combined.GetValueOrDefault(StatType.ATACK),
-            Speed = combined.GetValueOrDefault(StatType.SPEED),
-            AttackSpeed = combined.GetValueOrDefault(StatType.ATACK_SPEED)
-        };
-    }
+            var combined = new SerializedDictionary<StatType, float>();
 
-    private static void ApplyModifiers(
-        SerializedDictionary<StatType, float> target,
-        SerializedDictionary<StatType, float> modifiers)
-    {
-        foreach (var kvp in modifiers)
+            ApplyModifiers(combined, baseStats.Stats);
+            ApplyModifiers(combined, shape.Modifiers);
+            ApplyModifiers(combined, size.Modifiers);
+            ApplyModifiers(combined, color.Modifiers);
+
+            return new UnitData
+            {
+                HP = UnityEngine.Mathf.Max(combined.GetValueOrDefault(StatType.HP), MinHP),
+                ATK = UnityEngine.Mathf.Max(combined.GetValueOrDefault(StatType.ATACK), 0f),
+                Speed = UnityEngine.Mathf.Max(combined.GetValueOrDefault(StatType.SPEED), 0f),
+                AttackSpeed = UnityEngine.Mathf.Max(combined.GetValueOrDefault(StatType.ATACK_SPEED), MinAttackInterval)
+            };
+        }
+
+        private static void ApplyModifiers(
+            SerializedDictionary<StatType, float> target,
+            SerializedDictionary<StatType, float> modifiers)
         {
-            if (target.ContainsKey(kvp.Key))
-                target[kvp.Key] += kvp.Value;
-            else
-                target[kvp.Key] = kvp.Value;
+            foreach (var kvp in modifiers)
+            {
+                if (target.ContainsKey(kvp.Key))
+                    target[kvp.Key] += kvp.Value;
+                else
+                    target[kvp.Key] = kvp.Value;
+            }
         }
     }
 }

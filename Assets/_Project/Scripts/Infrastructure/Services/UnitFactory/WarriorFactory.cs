@@ -1,12 +1,12 @@
 ﻿using CodeBase.CoreGamePlay;
 using UnityEngine;
 
-public class UnitFactory : IUnitFactory
+public class WarriorFactory : IWarriorFactory
 {
-    private readonly UnitConfigDatabase _database;
+    private readonly WarriorConfigDatabase _database;
     private readonly ISceneObjectsProvider _sceneObjectsProvider;
 
-    public UnitFactory(UnitConfigDatabase database, ISceneObjectsProvider sceneObjectsProvider)
+    public WarriorFactory(WarriorConfigDatabase database, ISceneObjectsProvider sceneObjectsProvider)
     {
         _database = database;
         _sceneObjectsProvider = sceneObjectsProvider;
@@ -22,13 +22,13 @@ public class UnitFactory : IUnitFactory
         if (renderer == null)
             Debug.LogError($"[UnitFactory] '{shape.name}' prefab has NO Renderer. Add MeshRenderer.");
 
-        Animator animator = go.GetComponent<Animator>();
+        WarriorAnimator animator = go.GetComponent<WarriorAnimator>();
         if (animator == null)
-            Debug.LogError($"[UnitFactory] '{shape.name}' prefab has NO Animator. Add Animator component.");
+            Debug.LogError($"[UnitFactory] '{shape.name}' prefab has NO WarriorAnimator. Add WarriorAnimator component.");
 
         unit.View.Initialize(renderer, animator, color.Color, size.Scale);
         UnitData data = UnitDataBuilder.Build(_database.BaseStats, shape, size, color);
-        unit.Initialize(data, team);
+        unit.Initialize(data, team, animator);
         
         return unit;
     }

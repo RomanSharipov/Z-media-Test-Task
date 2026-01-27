@@ -7,7 +7,7 @@ using VContainer;
 
 public class ConfigsInstaller : AScriptableInstaller
 {
-    [SerializeField] private UnitConfigDatabase _unitConfigDatabase;
+    [SerializeField] private WarriorConfigDatabase _unitConfigDatabase;
     
     public override void Install(IContainerBuilder builder)
     {

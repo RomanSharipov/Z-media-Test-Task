@@ -4,7 +4,7 @@ using VContainer;
 
 public class TestServices : MonoBehaviour
 {
-    [Inject] IUnitFactory _unitFactory;
+    [Inject] IWarriorFactory _unitFactory;
 
 
 

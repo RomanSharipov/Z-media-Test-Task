@@ -22,14 +22,14 @@ namespace CodeBase.Infrastructure.Installers
             builder.Register<AddressableAssetProvider>(Lifetime.Singleton)
                 .As<IAssetProvider>();
             
-            builder.Register<UnitFactory>(Lifetime.Singleton)
-                .As<IUnitFactory>();
+            builder.Register<WarriorFactory>(Lifetime.Singleton)
+                .As<IWarriorFactory>();
             
             builder.Register<SceneObjectsProvider>(Lifetime.Singleton)
                 .As<ISceneObjectsProvider>();
             
-            builder.Register<UnitsOnLevel>(Lifetime.Singleton)
-                .As<IUnitsOnLevel>();
+            builder.Register<WarriorsOnLevel>(Lifetime.Singleton)
+                .As<IWarriorsOnLevel>();
         }
     }    
 }

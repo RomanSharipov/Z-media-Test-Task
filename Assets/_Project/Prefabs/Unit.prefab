@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8764576423910419063}
   - component: {fileID: 2452145077916133295}
   - component: {fileID: 3218085177898482184}
+  - component: {fileID: 4696921465965549110}
   m_Layer: 3
   m_Name: Unit
   m_TagString: Untagged
@@ -47,8 +48,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d6ee9515775ae143b6f7710bf625daf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _view: {fileID: 2452145077916133295}
   _unitDetector: {fileID: 8764576423910419063}
-  _unitView: {fileID: 2452145077916133295}
+  _animator: {fileID: 0}
+  _attackComponent: {fileID: 4696921465965549110}
+  _battleStarted: 0
 --- !u!114 &8764576423910419063
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -100,3 +104,16 @@ CapsuleCollider:
   m_Height: 1
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &4696921465965549110
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 821318416402734003}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f0274ed73523e24bb3bc7c6826ac769, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _attackDistance: 1.5

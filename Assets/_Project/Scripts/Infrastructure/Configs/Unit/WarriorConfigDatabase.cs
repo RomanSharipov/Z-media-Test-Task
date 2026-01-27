@@ -1,8 +1,8 @@
 using CodeBase.CoreGamePlay;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "BattleSim/Database", fileName = "UnitConfigDatabase")]
-public class UnitConfigDatabase : ScriptableObject
+[CreateAssetMenu(menuName = "BattleSim/WarriorConfigDatabase", fileName = "WarriorConfigDatabase")]
+public class WarriorConfigDatabase : ScriptableObject
 {
     [field: SerializeField] public BaseStatsConfig BaseStats { get; private set; }
     [field: SerializeField] public Warrior UnitPrefab { get; private set; }

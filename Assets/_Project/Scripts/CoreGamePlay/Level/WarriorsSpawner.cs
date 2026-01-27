@@ -4,15 +4,15 @@ using VContainer;
 
 namespace CodeBase.CoreGamePlay
 {
-    public class UnitsSpawner : MonoBehaviour
+    public class WarriorsSpawner : MonoBehaviour
     {
         [SerializeField] private Transform _playerSpawnPoint;
         [SerializeField] private Transform _botSpawnPoint;
         [SerializeField] private int _unitsPerTeam = 20;
         [SerializeField] private float _spawnSpread = 5f;
 
-        [Inject] private IUnitFactory _unitFactory;
-        [Inject] private IUnitsOnLevel _unitsOnLevel;
+        [Inject] private IWarriorFactory _unitFactory;
+        [Inject] private IWarriorsOnLevel _unitsOnLevel;
 
         [Button]
         public void SpawnPlayerUnits()
@@ -37,7 +37,7 @@ namespace CodeBase.CoreGamePlay
             {
                 Vector3 position = GetRandomPosition(spawnPoint);
                 Warrior unit = _unitFactory.CreateRandom(position, team);
-                _unitsOnLevel.AddUnit(unit);
+                _unitsOnLevel.AddWarrior(unit);
             }
         }
 

@@ -1,14 +1,15 @@
-﻿using UnityEngine;
+﻿using CodeBase.CoreGamePlay;
+using UnityEngine;
 
-public class UnitView : MonoBehaviour
+public class WarriorView : MonoBehaviour
 {
     private Renderer _renderer;
-    private Animator _animator;
+    private WarriorAnimator _warriorAnimator;
 
-    public void Initialize(Renderer renderer, Animator animator, Color color, float scale)
+    public void Initialize(Renderer renderer, WarriorAnimator animator, Color color, float scale)
     {
         _renderer = renderer;
-        _animator = animator;
+        _warriorAnimator = animator;
 
         SetColor(color);
         SetScale(scale);
@@ -24,10 +25,4 @@ public class UnitView : MonoBehaviour
     {
         transform.localScale = Vector3.one * scale;
     }
-
-    public void PlayAttack()
-    {
-        _animator.SetTrigger("Attack");
-    }
-
 }
