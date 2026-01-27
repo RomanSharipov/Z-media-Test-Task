@@ -2,8 +2,14 @@
 
 public class UnitView : MonoBehaviour
 {
-    [SerializeField] private Renderer _renderer;
-    [SerializeField] private Animator _animator;
+    private Renderer _renderer;
+    private Animator _animator;
+
+    public void Initialize(Renderer renderer, Animator animator)
+    {
+        _renderer = renderer;
+        _animator = animator;
+    }
 
     public void SetColor(Color color)
     {
@@ -20,13 +26,4 @@ public class UnitView : MonoBehaviour
         _animator.SetTrigger("Attack");
     }
 
-    public void PlayDamage()
-    {
-        _animator.SetTrigger("Damage");
-    }
-
-    public void PlayDeath()
-    {
-        _animator.SetTrigger("Death");
-    }
 }

@@ -12,22 +12,28 @@ public class UnitFactory : IUnitFactory
         _sceneObjectsProvider = sceneObjectsProvider;
     }
 
-    public Unit Create(ShapeConfig shape, SizeConfig size, ColorConfig color, Vector3 position)
+    public Warrior Create(ShapeConfig shape, SizeConfig size, ColorConfig color, Vector3 position)
     {
-        Unit unit = Object.Instantiate(_database.UnitPrefab, position, Quaternion.identity, _sceneObjectsProvider.UnitsContainer);
+        Warrior unit = Object.Instantiate(_database.UnitPrefab, position, Quaternion.identity, _sceneObjectsProvider.UnitsContainer);
         
-        UnitView unitView = Object.Instantiate(shape.UnitViewPrefab, position, Quaternion.identity, _sceneObjectsProvider.UnitsContainer);
+        GameObject go = Object.Instantiate(shape.Prefab, position, Quaternion.identity, unit.transform);
 
-        
+        Renderer renderer = go.GetComponent<Renderer>();
+        if (renderer == null)
+            Debug.LogError($"[UnitFactory] '{shape.name}' prefab has NO Renderer. Add MeshRenderer.");
 
-        unitView.transform.SetParent(unit.transform);
+        Animator animator = go.GetComponent<Animator>();
+        if (animator == null)
+            Debug.LogError($"[UnitFactory] '{shape.name}' prefab has NO Animator. Add Animator component.");
+
+        unit.View.Initialize(renderer, animator);
 
         UnitData data = UnitDataBuilder.Build(_database.BaseStats, shape, size, color);
-        unit.Initialize(data, color.Color, size.Scale, unitView);
+        
         return unit;
     }
 
-    public Unit CreateRandom(Vector3 position)
+    public Warrior CreateRandom(Vector3 position)
     {
         var shape = _database.Shapes[Random.Range(0, _database.Shapes.Length)];
         var size = _database.Sizes[Random.Range(0, _database.Sizes.Length)];

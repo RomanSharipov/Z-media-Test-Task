@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Sphere
   m_EditorClassIdentifier: 
   <Id>k__BackingField: Sphere
-  <UnitViewPrefab>k__BackingField: {fileID: 5247346637350136863, guid: 68a9d66ac33e30444a343fdc3f0fed4b, type: 3}
+  <Prefab>k__BackingField: {fileID: 6530447000743738056, guid: 68a9d66ac33e30444a343fdc3f0fed4b, type: 3}
   <Modifiers>k__BackingField:
     _serializedList:
     - Key: 2

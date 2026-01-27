@@ -7,15 +7,15 @@ namespace CodeBase.CoreGamePlay
         [SerializeField] private float _detectionRadius = 10f;
         [SerializeField] private LayerMask _unitLayer;
 
-        private Unit _owner;
+        private Warrior _owner;
         private Collider[] _hitBuffer = new Collider[20];
 
-        public void Initialize(Unit owner)
+        public void Initialize(Warrior owner)
         {
             _owner = owner;
         }
 
-        public bool TryDetect(out Unit target)
+        public bool TryDetect(out Warrior target)
         {
             target = null;
             float closestDistance = float.MaxValue;
@@ -29,7 +29,7 @@ namespace CodeBase.CoreGamePlay
 
             for (int i = 0; i < hitCount; i++)
             {
-                if (!_hitBuffer[i].TryGetComponent<Unit>(out var unit))
+                if (!_hitBuffer[i].TryGetComponent<Warrior>(out var unit))
                     continue;
 
                 if (unit == _owner || !unit.IsAlive)

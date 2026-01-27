@@ -6,6 +6,6 @@ using UnityEngine;
 public class ShapeConfig : ScriptableObject
 {
     [field: SerializeField] public string Id { get; private set; }
-    [field: SerializeField] public UnitView UnitViewPrefab { get; private set; }
+    [field: SerializeField] public GameObject Prefab { get; private set; }
     [field: SerializeField] public SerializedDictionary<StatType, float> Modifiers { get; private set; }
 }

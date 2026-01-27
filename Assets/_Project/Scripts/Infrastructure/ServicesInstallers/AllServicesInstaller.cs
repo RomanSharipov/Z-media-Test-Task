@@ -13,8 +13,6 @@ namespace CodeBase.Infrastructure.Installers
             builder.Register<LevelService>(Lifetime.Singleton)
                 .As<ILevelService>();
             
-
-            
             builder.Register<PlayerPrefsSaveService>(Lifetime.Singleton)
                 .As<ISaveService>();
             
@@ -23,6 +21,15 @@ namespace CodeBase.Infrastructure.Installers
             
             builder.Register<AddressableAssetProvider>(Lifetime.Singleton)
                 .As<IAssetProvider>();
+            
+            builder.Register<UnitFactory>(Lifetime.Singleton)
+                .As<IUnitFactory>();
+            
+            builder.Register<SceneObjectsProvider>(Lifetime.Singleton)
+                .As<ISceneObjectsProvider>();
+            
+            builder.Register<UnitsOnLevel>(Lifetime.Singleton)
+                .As<IUnitsOnLevel>();
         }
     }    
 }

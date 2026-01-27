@@ -1,13 +1,15 @@
-using CodeBase.Infrastructure.Services;
 using TriInspector;
 using UnityEngine;
 using VContainer;
 
 public class TestServices : MonoBehaviour
 {
-    [Inject] IAppStateService appStateService;
+    [Inject] IUnitFactory _unitFactory;
 
-
-
+    [Button]
+    public void CreateRandom()
+    {
+        _unitFactory.CreateRandom(Vector3.zero);
+    }
 
 }
