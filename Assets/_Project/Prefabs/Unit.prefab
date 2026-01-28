@@ -13,8 +13,9 @@ GameObject:
   - component: {fileID: 6432525153615663486}
   - component: {fileID: 8764576423910419063}
   - component: {fileID: 2452145077916133295}
-  - component: {fileID: 3218085177898482184}
   - component: {fileID: 4696921465965549110}
+  - component: {fileID: 8901413126954912323}
+  - component: {fileID: 654398221468242235}
   m_Layer: 3
   m_Name: Unit
   m_TagString: Untagged
@@ -55,6 +56,11 @@ MonoBehaviour:
   _attackComponent: {fileID: 4696921465965549110}
   _battleStarted: 0
   _movement: {fileID: 6432525153615663486}
+  Data:
+    HP: 0
+    ATK: 0
+    Speed: 0
+    AttackSpeed: 0
 --- !u!114 &6432525153615663486
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -96,7 +102,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eca3d5e7ccaf5ae45bbdf48d2e12f2e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!136 &3218085177898482184
+--- !u!114 &4696921465965549110
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 821318416402734003}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f0274ed73523e24bb3bc7c6826ac769, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _attackDistance: 3
+--- !u!136 &8901413126954912323
 CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -115,20 +134,34 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.6
   m_Height: 1
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &4696921465965549110
-MonoBehaviour:
+--- !u!54 &654398221468242235
+Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 821318416402734003}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f0274ed73523e24bb3bc7c6826ac769, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _attackDistance: 1.5
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 0

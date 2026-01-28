@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SMALL
   m_EditorClassIdentifier: 
   <Id>k__BackingField: SMALL
-  <Scale>k__BackingField: 0.7
+  <Scale>k__BackingField: 0.8
   <Modifiers>k__BackingField:
     _serializedList:
     - Key: 2

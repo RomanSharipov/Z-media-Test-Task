@@ -1,4 +1,7 @@
-﻿public struct UnitData
+﻿using System;
+
+[Serializable]
+public struct UnitData
 {
     public float HP;
     public float ATK;

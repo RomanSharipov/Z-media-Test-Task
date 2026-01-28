@@ -13,21 +13,23 @@ namespace CodeBase.CoreGamePlay
         [SerializeField] private AttackComponent _attackComponent;
         [SerializeField] private bool _battleStarted;
         [SerializeField] private Movement _movement;
+        [SerializeField] private Health _health;
 
         private float _attackCooldown;
         private WarriorStateMachine _stateMachine;
 
         private Subject<Unit> _onDied = new();
+        [SerializeField]
+        public UnitData Data;
 
-        public UnitData Data { get; private set; }
-        public Health Health { get; private set; }
         public WarriorView View => _view;
         public WarriorAnimator Animator => _warriorAnimator;
         public UnitDetector UnitDetector => _unitDetector;
         public TeamType CurrentTeam { get; private set; }
         public Warrior CurrentTarget { get; set; }
 
-        public bool IsAlive => Health.IsAlive;
+        public Health Health => _health;
+        public bool IsAlive => _health.IsAlive;
         public bool CanAttack => _attackCooldown <= 0f;
 
 
@@ -45,7 +47,7 @@ namespace CodeBase.CoreGamePlay
             _warriorAnimator = warriorAnimator;
             Data = data;
             CurrentTeam = team;
-            Health = new Health(data.HP);
+            _health = new Health(data.HP);
             _movement.Initialize();
 
             _unitDetector.Initialize(this);
@@ -54,8 +56,8 @@ namespace CodeBase.CoreGamePlay
             _warriorAnimator.OnDamageFrame
                 .Subscribe(_ => _attackComponent.Attack())
                 .AddTo(this);
-            
-            Health.OnDied
+
+            _health.OnDied
                 .Subscribe(_ => Die())
                 .AddTo(this);
             InitializeStateMachine();
@@ -67,6 +69,9 @@ namespace CodeBase.CoreGamePlay
                 _attackCooldown -= Time.deltaTime;
 
             _stateMachine.Update();
+
+            Debug.Log($"_stateMachine = {_stateMachine.CurrentState} {gameObject.name}");
+
         }
 
         public void TakeDamage(float damage)
@@ -74,7 +79,7 @@ namespace CodeBase.CoreGamePlay
             Health.TakeDamage(damage);
         }
 
-        public void StartAttack()
+        public void Attack()
         {
             _warriorAnimator.PlayAttack();
             _attackCooldown = Data.AttackSpeed;

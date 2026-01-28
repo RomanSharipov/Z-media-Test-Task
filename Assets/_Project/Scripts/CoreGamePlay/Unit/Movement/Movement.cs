@@ -13,7 +13,7 @@ namespace CodeBase.CoreGamePlay
 
         public void Initialize()
         {
-            _provider = new TransformMovementProvider(transform);
+            _provider = new RigidbodyMovementProvider(GetComponent<Rigidbody>());
         }
 
         public void MoveTo(Vector3 targetPosition, float speed)
@@ -39,6 +39,15 @@ namespace CodeBase.CoreGamePlay
             _provider.RotateTo(_currentDirection, _rotationSpeed);
         }
 
+        public void RotateToTarget(Vector3 targetPosition)
+        {
+            Vector3 direction = (targetPosition - transform.position).normalized;
+            direction.y = 0f;
 
+            if (direction == Vector3.zero)
+                return;
+
+            _provider.RotateTo(direction, _rotationSpeed);
+        }
     }
 }

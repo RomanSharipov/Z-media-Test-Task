@@ -1,6 +1,7 @@
 ﻿using System;
 using UniRx;
 
+[Serializable]
 public class Health
 {
     private readonly float _maxHP;

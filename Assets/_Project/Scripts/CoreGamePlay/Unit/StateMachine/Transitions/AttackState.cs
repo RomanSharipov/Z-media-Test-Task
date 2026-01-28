@@ -11,8 +11,11 @@ namespace CodeBase.CoreGamePlay
 
         public override void UpdateState()
         {
+            if (_warrior.CurrentTarget != null)
+                _warrior.Movement.RotateToTarget(_warrior.CurrentTarget.transform.position);
+
             if (_warrior.CanAttack)
-                _warrior.StartAttack();
+                _warrior.Attack();
         }
 
         public override void Exit() { }

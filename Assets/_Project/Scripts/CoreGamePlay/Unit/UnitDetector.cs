@@ -29,21 +29,21 @@ namespace CodeBase.CoreGamePlay
 
             for (int i = 0; i < hitCount; i++)
             {
-                if (!_hitBuffer[i].TryGetComponent<Warrior>(out var unit))
+                if (!_hitBuffer[i].TryGetComponent(out Warrior warrior))
+                    continue;
+                
+                if (warrior == _owner || !warrior.IsAlive)
                     continue;
 
-                if (unit == _owner || !unit.IsAlive)
+                if (warrior.CurrentTeam == _owner.CurrentTeam)
                     continue;
 
-                if (unit.CurrentTeam == _owner.CurrentTeam)
-                    continue;
-
-                float distance = Vector3.Distance(transform.position, unit.transform.position);
+                float distance = Vector3.Distance(transform.position, warrior.transform.position);
 
                 if (distance < closestDistance)
                 {
                     closestDistance = distance;
-                    target = unit;
+                    target = warrior;
                 }
             }
 
