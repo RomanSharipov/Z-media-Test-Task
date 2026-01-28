@@ -16,21 +16,21 @@ namespace CodeBase.Infrastructure
         [Inject] private readonly IScreenSceneService _screenSceneService;
 
         [Inject] private readonly BattleState _battleState;
+        [Inject] private readonly EmptyState _emptyState;
 
 
         private CompositeDisposable _compositeDisposable = new();
 
         public void Initialize()
         {
-            _battleState.Initialize(_childStateMachine);
-
-            
             RegisterChildState(_battleState);
+            RegisterChildState(_emptyState);
 
         }
 
         public override async UniTask Enter()
         {
+
             ISceneInitializer levelMain = await _levelService.LoadCurrentLevel();
             levelMain.InitializeSceneServices();
 
@@ -48,6 +48,7 @@ namespace CodeBase.Infrastructure
                 }).AddTo(_compositeDisposable);
             }).Forget();
         
+            EnterChildState<EmptyState>().Forget();
         }
         
         protected override UniTask OnExit()

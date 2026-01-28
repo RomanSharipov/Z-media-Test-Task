@@ -80,7 +80,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 558624c60c3fd78429f0c6f444771ede, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _detectionRadius: 10
+  _detectionRadius: 100
   _unitLayer:
     serializedVersion: 2
     m_Bits: 8

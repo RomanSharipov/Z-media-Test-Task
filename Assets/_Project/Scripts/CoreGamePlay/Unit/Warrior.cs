@@ -112,5 +112,10 @@ namespace CodeBase.CoreGamePlay
 
             _stateMachine.SetState(searchEnemyState);
         }
+
+        public void StartBattle()
+        {
+            _battleStarted = true;
+        }
     }
 }

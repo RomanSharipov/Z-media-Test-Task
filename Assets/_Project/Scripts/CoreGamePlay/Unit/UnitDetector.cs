@@ -35,6 +35,9 @@ namespace CodeBase.CoreGamePlay
                 if (unit == _owner || !unit.IsAlive)
                     continue;
 
+                if (unit.CurrentTeam == _owner.CurrentTeam)
+                    continue;
+
                 float distance = Vector3.Distance(transform.position, unit.transform.position);
 
                 if (distance < closestDistance)

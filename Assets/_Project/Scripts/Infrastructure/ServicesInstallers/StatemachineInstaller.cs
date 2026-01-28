@@ -30,6 +30,10 @@ namespace CodeBase.Infrastructure.Installers
                 .AsSelf()
                 .AsImplementedInterfaces();
 
+            builder.Register<EmptyState>(Lifetime.Singleton)
+                .AsSelf()
+                .AsImplementedInterfaces();
+
 
             builder.Register<BootstrapState>(Lifetime.Singleton).AsSelf();
             builder.Register<MenuState>(Lifetime.Singleton).AsSelf();

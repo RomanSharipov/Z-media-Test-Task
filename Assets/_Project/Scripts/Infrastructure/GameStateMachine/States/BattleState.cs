@@ -1,38 +1,34 @@
-﻿using Cysharp.Threading.Tasks;
-using UnityEngine;
+﻿using CodeBase.CoreGamePlay;
+using Cysharp.Threading.Tasks;
 using VContainer;
 
 namespace CodeBase.Infrastructure
 {
-    /// <summary>
-    /// BattleState - дочерний стейт GameLoopState, который сам является ParentState
-    /// Имеет свои дочерние стейты: ReplaceWarriorsState, CombatState, VictoryState
-    /// </summary>
-    public class BattleState : ParentState
+
+    public class BattleState : IState
     {
-        private GameStateMachine _parentStateMachine;
+        [Inject] private IWarriorsOnLevel _warriorsOnLevel;
 
-
-        public void Initialize(GameStateMachine parentStateMachine)
+        public UniTask Enter()
         {
-            _parentStateMachine = parentStateMachine;
-            //_combatState.Initialize(_childStateMachine);
-            //_combatState2.Initialize(_childStateMachine);
-            //RegisterChildState(_combatState);
-            //RegisterChildState(_combatState2);
+            foreach (Warrior item in _warriorsOnLevel.BotWarriors)
+            {
+                item.StartBattle();
+            }
 
-        }
+            foreach (Warrior item in _warriorsOnLevel.PlayerWarriors)
+            {
+                item.StartBattle();
 
-        public override UniTask Enter()
-        {
-            //_childStateMachine.Enter<CombatState>().Forget();
+            }
+
             return UniTask.CompletedTask;
         }
 
-
-        protected override UniTask OnExit()
+        public UniTask Exit()
         {
             return UniTask.CompletedTask;
+            
         }
     }
 }
