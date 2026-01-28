@@ -12,6 +12,7 @@ namespace CodeBase.CoreGamePlay
         [SerializeField] private WarriorAnimator _warriorAnimator;
         [SerializeField] private AttackComponent _attackComponent;
         [SerializeField] private bool _battleStarted;
+        [SerializeField] private Movement _movement;
 
         private float _attackCooldown;
         private WarriorStateMachine _stateMachine;
@@ -30,8 +31,9 @@ namespace CodeBase.CoreGamePlay
         public bool CanAttack => _attackCooldown <= 0f;
 
 
+        public Movement Movement => _movement;
         public WarriorStateMachine StateMachine => _stateMachine;
-
+        
         public IObservable<Unit> OnDied => _onDied;
 
         public bool BattleStarted => _battleStarted;
@@ -44,7 +46,8 @@ namespace CodeBase.CoreGamePlay
             Data = data;
             CurrentTeam = team;
             Health = new Health(data.HP);
-            
+            _movement.Initialize();
+
             _unitDetector.Initialize(this);
             _attackComponent.Initialize(this);
 

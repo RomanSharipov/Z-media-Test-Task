@@ -4,7 +4,10 @@ namespace CodeBase.CoreGamePlay
     {
         public AttackState(Warrior warrior) : base(warrior) { }
 
-        public override void Enter() { }
+        public override void Enter()
+        {
+            _warrior.Movement.Stop();
+        }
 
         public override void UpdateState()
         {

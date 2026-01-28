@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace CodeBase.CoreGamePlay
 {
     public class MoveToEnemyState : StateBase
@@ -13,10 +11,12 @@ namespace CodeBase.CoreGamePlay
             if (_warrior.CurrentTarget == null)
                 return;
 
-            Vector3 direction = (_warrior.CurrentTarget.transform.position - _warrior.transform.position).normalized;
-            _warrior.transform.position += direction * _warrior.Data.Speed * Time.deltaTime;
+            _warrior.Movement.MoveTo(_warrior.CurrentTarget.transform.position, _warrior.Data.Speed);
         }
 
-        public override void Exit() { }
+        public override void Exit()
+        {
+            _warrior.Movement.Stop();
+        }
     }
 }
