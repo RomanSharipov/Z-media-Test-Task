@@ -328,6 +328,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _unitsContainer: {fileID: 2015420811}
+  _warriorsSpawner: {fileID: 646076520}
 --- !u!1 &1521027508
 GameObject:
   m_ObjectHideFlags: 0

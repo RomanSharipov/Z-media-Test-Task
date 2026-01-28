@@ -14,6 +14,7 @@ namespace CodeBase.Infrastructure
         [Inject] private readonly IAssetProvider _assetProvider;
         [Inject] private readonly IAppStateService _appStateService;
         [Inject] private readonly IScreenSceneService _screenSceneService;
+        [Inject] private readonly ISceneObjectsProvider _sceneObjectsProvider;
 
         [Inject] private readonly BattleState _battleState;
         [Inject] private readonly EmptyState _emptyState;
@@ -45,6 +46,11 @@ namespace CodeBase.Infrastructure
                 screen.OnBattleButton.Subscribe(_ =>
                 {
                     EnterChildState<BattleState>().Forget();
+                }).AddTo(_compositeDisposable);
+
+                screen.OnRandomizerButton.Subscribe(_ =>
+                {
+                    _sceneObjectsProvider.WarriorsSpawner.RandomizeArmies();
                 }).AddTo(_compositeDisposable);
             }).Forget();
         

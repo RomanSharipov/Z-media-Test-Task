@@ -1,63 +1,78 @@
-﻿using CodeBase.CoreGamePlay;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UniRx;
+using UnityEngine;
 
-public class WarriorsOnLevel : IWarriorsOnLevel
+namespace CodeBase.CoreGamePlay
 {
-    private List<Warrior> _botUnits = new();
-    private List<Warrior> _playerUnits = new();
-    private CompositeDisposable _disposables = new();
-
-    public IReadOnlyList<Warrior> BotWarriors => _botUnits;
-    public IReadOnlyList<Warrior> PlayerWarriors => _playerUnits;
-
-    private Subject<TeamType> _onTeamDefeated = new();
-    public IObservable<TeamType> OnTeamDefeated => _onTeamDefeated;
-
-    public void AddWarrior(Warrior unit)
+    public class WarriorsOnLevel : IWarriorsOnLevel
     {
-        if (unit.CurrentTeam == TeamType.Player)
+        private List<Warrior> _botWarriors = new();
+        private List<Warrior> _playerWarriors = new();
+        private CompositeDisposable _disposables = new();
+
+        private Subject<TeamType> _onTeamDefeated = new();
+
+        public IReadOnlyList<Warrior> BotWarriors => _botWarriors;
+        public IReadOnlyList<Warrior> PlayerWarriors => _playerWarriors;
+        public IObservable<TeamType> OnTeamDefeated => _onTeamDefeated;
+
+        public void AddWarrior(Warrior warrior)
         {
-            _playerUnits.Add(unit);
-            unit.OnDied.Subscribe(_ => RemoveWarrior(unit)).AddTo(_disposables);
+            if (warrior.CurrentTeam == TeamType.Player)
+            {
+                _playerWarriors.Add(warrior);
+                warrior.OnDied.Subscribe(_ => RemoveWarrior(warrior)).AddTo(_disposables);
+            }
+            else if (warrior.CurrentTeam == TeamType.Bot)
+            {
+                _botWarriors.Add(warrior);
+                warrior.OnDied.Subscribe(_ => RemoveWarrior(warrior)).AddTo(_disposables);
+            }
         }
-        else if (unit.CurrentTeam == TeamType.Bot)
+
+        public void RemoveWarrior(Warrior warrior)
         {
-            _botUnits.Add(unit);
-            unit.OnDied.Subscribe(_ => RemoveWarrior(unit)).AddTo(_disposables);
-        }
-    }
+            if (warrior.CurrentTeam == TeamType.Player)
+            {
+                _playerWarriors.Remove(warrior);
 
-    public void RemoveWarrior(Warrior unit)
-    {
-        if (unit.CurrentTeam == TeamType.Player)
+                if (_playerWarriors.Count == 0)
+                    _onTeamDefeated.OnNext(TeamType.Player);
+            }
+            else if (warrior.CurrentTeam == TeamType.Bot)
+            {
+                _botWarriors.Remove(warrior);
+
+                if (_botWarriors.Count == 0)
+                    _onTeamDefeated.OnNext(TeamType.Bot);
+            }
+        }
+
+        public void ClearTeam(TeamType team)
         {
-            _playerUnits.Remove(unit);
+            var list = team == TeamType.Player ? _playerWarriors : _botWarriors;
 
-            if (_playerUnits.Count == 0)
-                _onTeamDefeated.OnNext(TeamType.Player);
+            for (int i = list.Count - 1; i >= 0; i--)
+            {
+                var warrior = list[i];
+                list.RemoveAt(i);
+
+                if (warrior != null && warrior.gameObject != null)
+                    UnityEngine.Object.Destroy(warrior.gameObject);
+            }
         }
-        else if (unit.CurrentTeam == TeamType.Bot)
+
+        public void ClearAll()
         {
-            _botUnits.Remove(unit);
-
-            if (_botUnits.Count == 0)
-                _onTeamDefeated.OnNext(TeamType.Bot);
+            ClearTeam(TeamType.Player);
+            ClearTeam(TeamType.Bot);
+            _disposables.Clear();
         }
-    }
 
-    public List<Warrior> GetEnemies(TeamType team)
-    {
-        return team == TeamType.Player
-            ? _botUnits
-            : _playerUnits;
-    }
-
-    public void Clear()
-    {
-        _disposables.Clear();
-        _playerUnits.Clear();
-        _botUnits.Clear();
+        public void Dispose()
+        {
+            _disposables.Dispose();
+        }
     }
 }

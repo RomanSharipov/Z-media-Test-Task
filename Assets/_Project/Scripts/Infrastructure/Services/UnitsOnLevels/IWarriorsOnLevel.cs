@@ -8,6 +8,7 @@ public interface IWarriorsOnLevel
     public IReadOnlyList<Warrior> PlayerWarriors { get; }
     public IObservable<TeamType> OnTeamDefeated { get; }
     public void AddWarrior(Warrior warrior);
-    public List<Warrior> GetEnemies(TeamType team);
+    public void ClearAll();
+    public void ClearTeam(TeamType player);
     public void RemoveWarrior(Warrior warrior);
 }

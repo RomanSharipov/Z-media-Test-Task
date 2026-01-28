@@ -1,4 +1,5 @@
-﻿using CodeBase.Infrastructure.Services;
+﻿using CodeBase.CoreGamePlay;
+using CodeBase.Infrastructure.Services;
 using UnityEngine;
 using VContainer;
 
@@ -30,6 +31,7 @@ namespace CodeBase.Infrastructure.Installers
             
             builder.Register<WarriorsOnLevel>(Lifetime.Singleton)
                 .As<IWarriorsOnLevel>();
+
         }
     }    
 }

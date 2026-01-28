@@ -14,20 +14,12 @@ public class MainGameModeScreen : ABaseScreen, IMainGameModeScreen
     [SerializeField]
     private Button _battleButton;
     [SerializeField]
-    private Button _pauseButton;
-    [Inject]
-    private ISaveService ISaveService;
+    private Button _randomizerButton;
     
     public IObservable<Unit> OnMenu => _menuButton.OnClickAsObservable();
     public IObservable<Unit> OnBattleButton => _battleButton.OnClickAsObservable();
-    public IObservable<Unit> OnPauseButton => _pauseButton.OnClickAsObservable();
-
-    [Button]
-    public void Prit()
-    {
-        Debug.Log($"ISaveService = {ISaveService}");
-    }
-
+    public IObservable<Unit> OnRandomizerButton => _randomizerButton.OnClickAsObservable();
+    
     public override UniTask InitializeAsync()
     {
         return base.InitializeAsync();

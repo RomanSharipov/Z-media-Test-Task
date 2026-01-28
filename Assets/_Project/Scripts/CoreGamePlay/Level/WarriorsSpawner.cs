@@ -12,23 +12,34 @@ namespace CodeBase.CoreGamePlay
         [SerializeField] private float _spawnSpread = 5f;
 
         [Inject] private IWarriorFactory _unitFactory;
-        [Inject] private IWarriorsOnLevel _unitsOnLevel;
+        [Inject] private IWarriorsOnLevel _warriorsOnLevel;
 
         [Button]
-        public void SpawnPlayerUnits()
+        public void SpawnAll()
         {
             SpawnTeam(_playerSpawnPoint, TeamType.Player);
-        }
-        [Button]
-        public void SpawnBotUnits()
-        {
             SpawnTeam(_botSpawnPoint, TeamType.Bot);
         }
 
-        public void SpawnAll()
+        [Button]
+        public void RandomizeArmies()
         {
-            SpawnPlayerUnits();
-            SpawnBotUnits();
+            _warriorsOnLevel.ClearAll();
+            SpawnAll();
+        }
+
+        [Button]
+        public void RandomizePlayerArmy()
+        {
+            _warriorsOnLevel.ClearTeam(TeamType.Player);
+            SpawnTeam(_playerSpawnPoint, TeamType.Player);
+        }
+
+        [Button]
+        public void RandomizeBotArmy()
+        {
+            _warriorsOnLevel.ClearTeam(TeamType.Bot);
+            SpawnTeam(_botSpawnPoint, TeamType.Bot);
         }
 
         private void SpawnTeam(Transform spawnPoint, TeamType team)
@@ -36,8 +47,8 @@ namespace CodeBase.CoreGamePlay
             for (int i = 0; i < _unitsPerTeam; i++)
             {
                 Vector3 position = GetRandomPosition(spawnPoint);
-                Warrior unit = _unitFactory.CreateRandom(position, team);
-                _unitsOnLevel.AddWarrior(unit);
+                Warrior warrior = _unitFactory.CreateRandom(position, team);
+                _warriorsOnLevel.AddWarrior(warrior);
             }
         }
 
@@ -48,7 +59,6 @@ namespace CodeBase.CoreGamePlay
                 0f,
                 Random.Range(-_spawnSpread, _spawnSpread)
             );
-
             return spawnPoint.position + offset;
         }
     }
