@@ -15,6 +15,7 @@ namespace CodeBase.Infrastructure
         [Inject] private readonly IAppStateService _appStateService;
         [Inject] private readonly IScreenSceneService _screenSceneService;
         [Inject] private readonly ISceneObjectsProvider _sceneObjectsProvider;
+        [Inject] private readonly IWarriorsOnLevel _warriorsOnLevel;
 
         [Inject] private readonly BattleState _battleState;
         [Inject] private readonly EmptyState _emptyState;
@@ -61,7 +62,7 @@ namespace CodeBase.Infrastructure
         {
             _screenSceneService.HidePopup<IMainGameModeScreen>();    
             _compositeDisposable.Clear();
-            
+            _warriorsOnLevel.ClearAll();
             _levelService.UnLoadCurrentLevel();
             _assetProvider.Cleanup();
 

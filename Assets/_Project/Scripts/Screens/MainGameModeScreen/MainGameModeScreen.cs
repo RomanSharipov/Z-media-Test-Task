@@ -1,11 +1,8 @@
-﻿using Codice.Client.BaseCommands.Merge;
-using Cysharp.Threading.Tasks;
+﻿using Cysharp.Threading.Tasks;
 using System;
-using TriInspector;
 using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
-using VContainer;
 
 public class MainGameModeScreen : ABaseScreen, IMainGameModeScreen
 {
@@ -22,6 +19,11 @@ public class MainGameModeScreen : ABaseScreen, IMainGameModeScreen
     
     public override UniTask InitializeAsync()
     {
+        _battleButton.OnClickAsObservable().Subscribe(_ => 
+        {
+            _battleButton.gameObject.SetActive(false);
+        }).AddTo(this);
+
         return base.InitializeAsync();
     }
     public override UniTask Hide()

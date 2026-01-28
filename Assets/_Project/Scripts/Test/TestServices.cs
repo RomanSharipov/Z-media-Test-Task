@@ -4,7 +4,13 @@ using VContainer;
 
 public class TestServices : MonoBehaviour
 {
-    [Inject] IWarriorFactory _unitFactory;
+    [Inject] IWarriorsOnLevel _warriorsOnLevel;
+
+    [Button]
+    public void Count()
+    {
+        Debug.Log($"BotWarriors = {_warriorsOnLevel.BotWarriors.Count} Player =  {_warriorsOnLevel.PlayerWarriors.Count}");
+    }
 
 
 

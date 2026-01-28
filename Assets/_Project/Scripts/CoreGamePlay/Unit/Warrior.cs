@@ -13,13 +13,13 @@ namespace CodeBase.CoreGamePlay
         [SerializeField] private AttackComponent _attackComponent;
         [SerializeField] private bool _battleStarted;
         [SerializeField] private Movement _movement;
-        [SerializeField] private Health _health;
 
         private float _attackCooldown;
         private WarriorStateMachine _stateMachine;
 
         private Subject<Unit> _onDied = new();
-        [SerializeField]
+
+        private Health _health;
         public UnitData Data;
 
         public WarriorView View => _view;
@@ -69,9 +69,6 @@ namespace CodeBase.CoreGamePlay
                 _attackCooldown -= Time.deltaTime;
 
             _stateMachine.Update();
-
-            Debug.Log($"_stateMachine = {_stateMachine.CurrentState} {gameObject.name}");
-
         }
 
         public void TakeDamage(float damage)

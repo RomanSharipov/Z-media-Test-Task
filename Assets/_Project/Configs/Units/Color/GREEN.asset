@@ -16,9 +16,9 @@ MonoBehaviour:
   <Color>k__BackingField: {r: 0.22124177, g: 0.8679245, b: 0.19241722, a: 1}
   <Modifiers>k__BackingField:
     _serializedList:
-    - Key: 1
+    - Key: 2
       Value: -50
-    - Key: 4
+    - Key: 1
       Value: 20
     - Key: 3
       Value: -5
