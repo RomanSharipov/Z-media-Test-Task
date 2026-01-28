@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: BattleConfig
   m_EditorClassIdentifier: 
   <UnitsPerTeam>k__BackingField: 20
-  <SpawnSpread>k__BackingField: 5
+  <SpawnSpread>k__BackingField: 10

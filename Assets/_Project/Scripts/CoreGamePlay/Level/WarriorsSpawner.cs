@@ -52,7 +52,13 @@ namespace CodeBase.CoreGamePlay
                 0f,
                 Random.Range(-_spawnSpread, _spawnSpread)
             );
-            return spawnPoint.position + offset;
+
+            Vector3 position = spawnPoint.position + offset;
+
+            if (Physics.Raycast(position + Vector3.up * 5f, Vector3.down, out var hit, 10f))
+                position.y = hit.point.y;
+
+            return position;
         }
     }
 }
