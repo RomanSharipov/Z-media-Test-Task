@@ -5,13 +5,13 @@ using UniRx;
 
 public interface IWarriorsOnLevel
 {
-    IReadOnlyList<Warrior> BotWarriors { get; }
-    IReadOnlyList<Warrior> PlayerWarriors { get; }
-    IObservable<TeamType> OnTeamDefeated { get; }
-    IObservable<Unit> OnWarriorCountChanged { get; }
-
-    void AddWarrior(Warrior warrior);
-    void RemoveWarrior(Warrior warrior);
-    void ClearTeam(TeamType team);
-    void ClearAll();
+    public IReadOnlyList<Warrior> BotWarriors { get; }
+    public IReadOnlyList<Warrior> PlayerWarriors { get; }
+    public IObservable<TeamType> OnTeamDefeated { get; }
+    public IObservable<Unit> OnWarriorCountChanged { get; }
+     
+    public void AddWarrior(Warrior warrior);
+    public void RemoveWarrior(Warrior warrior);
+    public void ClearTeam(TeamType team);
+    public void ClearAll();
 }

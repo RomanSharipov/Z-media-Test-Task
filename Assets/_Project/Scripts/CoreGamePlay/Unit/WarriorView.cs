@@ -5,12 +5,11 @@ namespace CodeBase.CoreGamePlay
     public class WarriorView : MonoBehaviour
     {
         private Renderer _renderer;
-        private WarriorAnimator _warriorAnimator;
-
-        public void Initialize(Renderer renderer, WarriorAnimator animator, Color color, float scale)
+        
+        public void Initialize(Renderer renderer,Color color, float scale)
         {
             _renderer = renderer;
-            _warriorAnimator = animator;
+
             SetColor(color);
             SetScale(scale);
         }

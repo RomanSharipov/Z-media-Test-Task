@@ -1,5 +1,4 @@
-﻿using CodeBase.Infrastructure;
-using System;
+﻿using System;
 using UniRx;
 using UnityEngine;
 
@@ -16,36 +15,30 @@ namespace CodeBase.CoreGamePlay
 
         private float _attackCooldown;
         private WarriorStateMachine _stateMachine;
-
         private Subject<Unit> _onDied = new();
-
         private Health _health;
-        public UnitData Data;
-
+        private UnitData _data;
+        
         public WarriorView View => _view;
         public WarriorAnimator Animator => _warriorAnimator;
         public UnitDetector UnitDetector => _unitDetector;
         public TeamType CurrentTeam { get; private set; }
         public Warrior CurrentTarget { get; set; }
-
         public Health Health => _health;
         public bool IsAlive => _health.IsAlive;
         public bool CanAttack => _attackCooldown <= 0f;
-
-
         public Movement Movement => _movement;
         public WarriorStateMachine StateMachine => _stateMachine;
-        
         public IObservable<Unit> OnDied => _onDied;
-
         public bool BattleStarted => _battleStarted;
-
         public AttackComponent AttackComponent => _attackComponent;
+
+        public UnitData Data => _data;
 
         public void Initialize(UnitData data,TeamType team, WarriorAnimator warriorAnimator)
         {
             _warriorAnimator = warriorAnimator;
-            Data = data;
+            _data = data;
             CurrentTeam = team;
             _health = new Health(data.HP);
             _movement.Initialize();
@@ -63,12 +56,9 @@ namespace CodeBase.CoreGamePlay
             InitializeStateMachine();
         }
 
-        private void Update()
+        public void StartBattle()
         {
-            if (_attackCooldown > 0f)
-                _attackCooldown -= Time.deltaTime;
-
-            _stateMachine.Update();
+            _battleStarted = true;
         }
 
         public void TakeDamage(float damage)
@@ -79,15 +69,9 @@ namespace CodeBase.CoreGamePlay
         public void Attack()
         {
             _warriorAnimator.PlayAttack();
-            _attackCooldown = Data.AttackSpeed;
+            _attackCooldown = _data.AttackSpeed;
         }
-
-        private void Die()
-        {
-            Destroy(gameObject);
-            _onDied.OnNext(Unit.Default);
-        }
-
+        
         private void InitializeStateMachine()
         {
             _stateMachine = new WarriorStateMachine();
@@ -115,9 +99,18 @@ namespace CodeBase.CoreGamePlay
             _stateMachine.SetState(searchEnemyState);
         }
 
-        public void StartBattle()
+        private void Update()
         {
-            _battleStarted = true;
+            if (_attackCooldown > 0f)
+                _attackCooldown -= Time.deltaTime;
+
+            _stateMachine.Update();
+        }
+        
+        private void Die()
+        {
+            Destroy(gameObject);
+            _onDied.OnNext(Unit.Default);
         }
     }
 }

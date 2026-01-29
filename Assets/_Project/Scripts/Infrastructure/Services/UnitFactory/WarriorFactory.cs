@@ -27,7 +27,7 @@ public class WarriorFactory : IWarriorFactory
             Debug.LogError($"[UnitFactory] '{shape.name}' prefab has NO WarriorAnimator. Add WarriorAnimator component.");
 
 
-        unit.View.Initialize(renderer, animator, color.Color, size.Scale);
+        unit.View.Initialize(renderer, color.Color, size.Scale);
         UnitData data = UnitDataBuilder.Build(_database.BaseStats, shape, size, color);
         unit.Initialize(data, team, animator);
         

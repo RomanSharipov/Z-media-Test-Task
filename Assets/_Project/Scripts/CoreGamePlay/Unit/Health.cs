@@ -1,12 +1,11 @@
 ﻿using System;
 using UniRx;
-using UnityEngine;
 
-[Serializable]
+
 public class Health
 {
     private readonly float _maxHP;
-    [SerializeField]
+
     private float _currentHP;
     
     private Subject<Unit> _onDied = new();

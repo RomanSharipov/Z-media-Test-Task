@@ -24,7 +24,7 @@ namespace CodeBase.CoreGamePlay
             return new UnitData
             {
                 HP = UnityEngine.Mathf.Max(combined.GetValueOrDefault(StatType.HP), MinHP),
-                ATK = UnityEngine.Mathf.Max(combined.GetValueOrDefault(StatType.ATACK), 0f),
+                Attack = UnityEngine.Mathf.Max(combined.GetValueOrDefault(StatType.ATACK), 0f),
                 Speed = UnityEngine.Mathf.Max(combined.GetValueOrDefault(StatType.SPEED), 0f),
                 AttackSpeed = UnityEngine.Mathf.Max(combined.GetValueOrDefault(StatType.ATACK_SPEED), MinAttackInterval)
             };

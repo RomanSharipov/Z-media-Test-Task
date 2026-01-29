@@ -1,7 +1,7 @@
 public interface IState
 {
-    void Enter();
-    void Update();
-    void Exit();
-    void AddTransitions(params ITransition[] transitions);
+    public void Enter();
+    public void Update();
+    public void Exit();
+    public void AddTransitions(params ITransition[] transitions);
 }

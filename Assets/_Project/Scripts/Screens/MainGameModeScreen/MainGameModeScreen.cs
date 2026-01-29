@@ -4,7 +4,6 @@ using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using CodeBase.CoreGamePlay;
 using VContainer;
 
 public class MainGameModeScreen : ABaseScreen, IMainGameModeScreen

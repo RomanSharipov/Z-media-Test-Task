@@ -29,7 +29,7 @@ namespace CodeBase.CoreGamePlay
             if (_owner.CurrentTarget == null || !_owner.CurrentTarget.IsAlive)
                 return;
 
-            float damage = _owner.Data.ATK;
+            float damage = _owner.Data.Attack;
             _owner.CurrentTarget.TakeDamage(damage);
         }
     }

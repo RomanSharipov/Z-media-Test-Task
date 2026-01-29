@@ -1,5 +1,5 @@
 public interface ITransition
 {
-    bool ShouldTransition();
-    IState TargetState { get; }
+    public bool ShouldTransition();
+    public IState TargetState { get; }
 }
