@@ -19,6 +19,8 @@ namespace CodeBase.Infrastructure
 
         [Inject] private readonly BattleState _battleState;
         [Inject] private readonly EmptyState _emptyState;
+        [Inject] private readonly WinState _winState;
+        [Inject] private readonly LoseState _loseState;
 
 
         private CompositeDisposable _compositeDisposable = new();
@@ -27,6 +29,8 @@ namespace CodeBase.Infrastructure
         {
             RegisterChildState(_battleState);
             RegisterChildState(_emptyState);
+            RegisterChildState(_loseState);
+            RegisterChildState(_winState);
 
         }
 
@@ -36,6 +40,7 @@ namespace CodeBase.Infrastructure
             ISceneInitializer levelMain = await _levelService.LoadCurrentLevel();
             levelMain.InitializeSceneServices();
 
+            _sceneObjectsProvider.WarriorsSpawner.RandomizeArmies();
             _screenSceneService.ShowPopup<IMainGameModeScreen>(screen =>
             {
 
@@ -54,7 +59,21 @@ namespace CodeBase.Infrastructure
                     _sceneObjectsProvider.WarriorsSpawner.RandomizeArmies();
                 }).AddTo(_compositeDisposable);
             }).Forget();
-        
+
+            _warriorsOnLevel.OnTeamDefeated.Subscribe(team =>
+            {
+                if (team == TeamType.Player)
+                {
+                    EnterChildState<LoseState>().Forget();
+                }
+
+                if (team == TeamType.Bot)
+                {
+                    EnterChildState<WinState>().Forget();
+                }
+            }).AddTo(_compositeDisposable);
+
+
             EnterChildState<EmptyState>().Forget();
         }
         

@@ -10,6 +10,10 @@ public class UiServicesInstaller : AScriptableInstaller
     private AssetReference _mainMenuScreen;
     [SerializeField, AssetReferenceUILabelRestriction("UiScreen")]
     private AssetReference _mainGameModeScreen;
+    [SerializeField, AssetReferenceUILabelRestriction("UiScreen")]
+    private AssetReference _winScreen;
+    [SerializeField, AssetReferenceUILabelRestriction("UiScreen")]
+    private AssetReference _loseScreen;
     
     private ResourceProvider CreateNewScreensProvider(IObjectResolver resolver)
     {
@@ -18,6 +22,8 @@ public class UiServicesInstaller : AScriptableInstaller
 
         provider.RegisterScene<IMainMenuScreen>(_mainMenuScreen);
         provider.RegisterScene<IMainGameModeScreen>(_mainGameModeScreen);
+        provider.RegisterScene<IWinScreen>(_winScreen);
+        provider.RegisterScene<ILoseScreen>(_loseScreen);
 
 
         return provider;

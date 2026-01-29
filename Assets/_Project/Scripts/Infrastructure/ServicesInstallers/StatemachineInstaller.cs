@@ -26,17 +26,24 @@ namespace CodeBase.Infrastructure.Installers
             builder.Register<GameLoopState>(Lifetime.Singleton)
                 .AsSelf()
                 .AsImplementedInterfaces();
+
             builder.Register<BattleState>(Lifetime.Singleton)
-                .AsSelf()
-                .AsImplementedInterfaces();
+                .AsSelf();
 
             builder.Register<EmptyState>(Lifetime.Singleton)
-                .AsSelf()
-                .AsImplementedInterfaces();
+                .AsSelf();
+            
+            builder.Register<WinState>(Lifetime.Singleton)
+                .AsSelf();
+            
+            builder.Register<LoseState>(Lifetime.Singleton)
+                .AsSelf();
+            
+            builder.Register<BootstrapState>(Lifetime.Singleton)
+                .AsSelf();
 
-
-            builder.Register<BootstrapState>(Lifetime.Singleton).AsSelf();
-            builder.Register<MenuState>(Lifetime.Singleton).AsSelf();
+            builder.Register<MenuState>(Lifetime.Singleton)
+                .AsSelf();
             
         }
     }

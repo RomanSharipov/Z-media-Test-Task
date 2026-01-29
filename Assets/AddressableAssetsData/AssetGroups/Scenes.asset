@@ -17,6 +17,11 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: ac7f36ca520ae4847b39901d3dd6753d
   m_SerializeEntries:
+  - m_GUID: 0b16f483441d76e4c95eb9df202d6686
+    m_Address: Assets/_Project/Scenes/Screens/LoseScreen.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 214f17350d03b254c98e31d65425ba0e
     m_Address: Level_1
     m_ReadOnly: 0
@@ -30,6 +35,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 4b1b2137b60de6d4fa71ada1e8db6da7
     m_Address: Assets/_Project/Scenes/Screens/MainMenuScreen.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 74f2015225e678348927c18609e05516
+    m_Address: Assets/_Project/Scenes/Screens/WinScreen.unity
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

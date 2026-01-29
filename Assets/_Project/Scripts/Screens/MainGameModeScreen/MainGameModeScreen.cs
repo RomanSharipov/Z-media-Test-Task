@@ -22,6 +22,7 @@ public class MainGameModeScreen : ABaseScreen, IMainGameModeScreen
         _battleButton.OnClickAsObservable().Subscribe(_ => 
         {
             _battleButton.gameObject.SetActive(false);
+            _randomizerButton.gameObject.SetActive(false);
         }).AddTo(this);
 
         return base.InitializeAsync();

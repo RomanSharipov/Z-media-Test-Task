@@ -22,3 +22,13 @@ MonoBehaviour:
     m_SubObjectName: 
     m_SubObjectType: 
     m_EditorAssetChanged: 0
+  _winScreen:
+    m_AssetGUID: 74f2015225e678348927c18609e05516
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
+  _loseScreen:
+    m_AssetGUID: 0b16f483441d76e4c95eb9df202d6686
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
