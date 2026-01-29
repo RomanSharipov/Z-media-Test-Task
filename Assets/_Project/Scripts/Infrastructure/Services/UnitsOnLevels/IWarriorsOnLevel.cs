@@ -1,14 +1,17 @@
 ﻿using CodeBase.CoreGamePlay;
 using System;
 using System.Collections.Generic;
+using UniRx;
 
 public interface IWarriorsOnLevel
 {
-    public IReadOnlyList<Warrior> BotWarriors { get; }
-    public IReadOnlyList<Warrior> PlayerWarriors { get; }
-    public IObservable<TeamType> OnTeamDefeated { get; }
-    public void AddWarrior(Warrior warrior);
-    public void ClearAll();
-    public void ClearTeam(TeamType player);
-    public void RemoveWarrior(Warrior warrior);
+    IReadOnlyList<Warrior> BotWarriors { get; }
+    IReadOnlyList<Warrior> PlayerWarriors { get; }
+    IObservable<TeamType> OnTeamDefeated { get; }
+    IObservable<Unit> OnWarriorCountChanged { get; }
+
+    void AddWarrior(Warrior warrior);
+    void RemoveWarrior(Warrior warrior);
+    void ClearTeam(TeamType team);
+    void ClearAll();
 }

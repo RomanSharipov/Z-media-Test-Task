@@ -12,10 +12,13 @@ namespace CodeBase.CoreGamePlay
         private CompositeDisposable _disposables = new();
 
         private Subject<TeamType> _onTeamDefeated = new();
+        private Subject<Unit> _onWarriorCountChanged = new();
 
         public IReadOnlyList<Warrior> BotWarriors => _botWarriors;
         public IReadOnlyList<Warrior> PlayerWarriors => _playerWarriors;
         public IObservable<TeamType> OnTeamDefeated => _onTeamDefeated;
+
+        public IObservable<Unit> OnWarriorCountChanged => _onWarriorCountChanged;
 
         public void AddWarrior(Warrior warrior)
         {
@@ -29,6 +32,7 @@ namespace CodeBase.CoreGamePlay
                 _botWarriors.Add(warrior);
                 warrior.OnDied.Subscribe(_ => RemoveWarrior(warrior)).AddTo(_disposables);
             }
+            _onWarriorCountChanged.OnNext(Unit.Default);
         }
 
         public void RemoveWarrior(Warrior warrior)
@@ -47,6 +51,7 @@ namespace CodeBase.CoreGamePlay
                 if (_botWarriors.Count == 0)
                     _onTeamDefeated.OnNext(TeamType.Bot);
             }
+            _onWarriorCountChanged.OnNext(Unit.Default);
         }
 
         public void ClearTeam(TeamType team)
