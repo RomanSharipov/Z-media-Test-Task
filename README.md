@@ -46,7 +46,7 @@
 
 ## Unit Management
 
-Все активные юниты регистрируются в [WarriorsOnLevel](https://github.com/RomanSharipov/Z-media-Test-Task/blob/main/Assets/_Project/Scripts/Infrastructure/Services/UnitFactory/WarriorFactory.cs) — централизованный доступ к живым юнитам, упрощённая логика завершения боя, безопасное удаление при смерти. Никаких `Find` или `GetComponentsInChildren`.
+Все активные юниты регистрируются в [WarriorsOnLevel](https://github.com/RomanSharipov/Z-media-Test-Task/blob/main/Assets/_Project/Scripts/Infrastructure/Services/WarriorsOnLevel/WarriorsOnLevel.cs) — централизованный доступ к живым юнитам, упрощённая логика завершения боя, безопасное удаление при смерти. Никаких `Find` или `GetComponentsInChildren`.
 
 ---
 
